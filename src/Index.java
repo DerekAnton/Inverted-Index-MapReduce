@@ -7,14 +7,14 @@ public class Index
 	public static void main(String[] args)
 	{
 		int requestedThreads = 0;
-		File fileArray[] = null;
+		File[] fileArray = new File[20];
 		
 		try
 		{
 			requestedThreads = Integer.parseInt(args[0]);
-			for(int counter = 0; counter <args.length; counter++)
+			for(int counter = 1; counter < args.length; counter++)
 			{
-				fileArray[counter] = new File(args[counter]);
+				fileArray[counter-1] = new File(args[counter]);
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)
