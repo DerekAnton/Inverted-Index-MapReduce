@@ -1,5 +1,6 @@
 
 import java.util.concurrent.Semaphore;
+
 import java.io.File;
 
 public class Index 
@@ -20,10 +21,31 @@ public class Index
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 			System.out.println("The parameters passed were not of the form");
-			System.out.println("Index [n] [file1] [file2] ... [filen]");
+			System.out.println("Index [n] [file1] [file2] ... [filek]");
 			System.out.println("Please re-run the program and try again");
 		}
+	}	
+	
+	
+	public void createMapThreads(int numThreads){
+		Runnable thread;
+		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ ){
+			//Create New Thread
+			thread = new Runnable(){
+				public void run() {
+					//Calls method that reads in text files
+				}
+			};
+			new Thread(thread).start();
+		}
+		
 	}
+	
+	public void mapRead(int fileNumber){
+		//Method for reading text and adding to bounded buffer
+	}
+	
+	
 }
 
 /* INPUT
