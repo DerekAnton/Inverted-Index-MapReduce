@@ -19,9 +19,11 @@ public class mapperThread extends Thread
 	}
 	public void mapRead(int fileNumber)
 	{
+		String nextLine;
 	    try 
 	    {
 			Scanner scan = new Scanner(fileArray[fileNumber]);
+			nextLine = scan.next();
 			
 			
 		} 
