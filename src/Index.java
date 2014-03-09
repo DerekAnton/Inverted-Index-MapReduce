@@ -30,35 +30,17 @@ public class Index
 	}	
 	
 	
-	public void createMapThreads(int numThreads){
-		Runnable thread;
-		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ ){
-			//Create New Thread
-			thread = new Runnable(){
-				public void run() {
-					mapRead(1);
-					//Calls method that reads in text files
-				}
-			};
-			new Thread(thread).start();
-		}
+	public void createMapThreads(int numThreads)
+	{
+		mapperThread[] threadHolder = new mapperThread[20];
 		
+		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
+		{
+			//Create New Thread
+			threadHolder[threadNum] = new mapperThread(fileArray, threadNum);
+			threadHolder[threadNum].start();
+		}
 	}
-	
-	public void mapRead(int fileNumber){
-	    try {
-			Scanner scan = new Scanner(fileArray[fileNumber]);
-			
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("File #" + fileNumber + " Read Error");
-			//e.printStackTrace();
-		}  
-
-		//Method for reading text and adding to bounded buffer
-	}
-	
-	
 }
 
 /* INPUT
