@@ -2,13 +2,16 @@
 import java.util.concurrent.Semaphore;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Index 
 {
+	private static File[] fileArray;
 	public static void main(String[] args)
 	{
 		int requestedThreads = 0;
-		File[] fileArray = new File[20];
+		fileArray = new File[20];
 		
 		try
 		{
@@ -33,6 +36,7 @@ public class Index
 			//Create New Thread
 			thread = new Runnable(){
 				public void run() {
+					mapRead(1);
 					//Calls method that reads in text files
 				}
 			};
@@ -42,6 +46,15 @@ public class Index
 	}
 	
 	public void mapRead(int fileNumber){
+	    try {
+			Scanner scan = new Scanner(fileArray[fileNumber]);
+			
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("File #" + fileNumber + " Read Error");
+			//e.printStackTrace();
+		}  
+
 		//Method for reading text and adding to bounded buffer
 	}
 	
