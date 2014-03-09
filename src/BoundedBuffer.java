@@ -20,7 +20,7 @@ public class BoundedBuffer {
 		
 	}
 	
-	public synchronized void Producer(String str){
+	public void Producer(String str){
 		try {
 			empty.acquire();
 			mutex.acquire();
@@ -36,7 +36,7 @@ public class BoundedBuffer {
 		
 	}
 
-	public synchronized String remove(){
+	public String remove(){
 		String returnString = "";
 		try {
 			full.acquire();
