@@ -8,11 +8,13 @@ public class Index
 {
 	private static mapperThread[] threadHolder = new mapperThread[20]; // the current mapper threads //
 	private static File[] fileArray= new File[20];
+	public static BoundedBuffer[] bbuffers;
+	public static int requestedMapperThreads;
 	
 	public static void main(String[] args)
 	{
 		int requestedReducerThreads = 0;
-		int requestedMapperThreads = 0;
+		requestedMapperThreads = 0;
 
 		try
 		{
@@ -22,6 +24,7 @@ public class Index
 				fileArray[counter-1] = new File(args[counter]);
 				requestedMapperThreads++;
 			}
+			bbuffers = new BoundedBuffer[requestedReducerThreads];
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
