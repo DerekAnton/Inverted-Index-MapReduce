@@ -9,9 +9,10 @@ public class Index
 {
 	public static mapperThread[] mapperThreadHolder; //will house the mapper threads//
 	public static File[] fileArray; //The loaded files from disk //
+	private static String[] fileNames;
 	public static BoundedBuffer[] bbuffers;
 	public static int requestedMapperThreads;
-	public static ConcurrentHashMap invertedIndex;
+	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
 	
 	public static void main(String[] args)
 	{
@@ -24,6 +25,7 @@ public class Index
 			for(int counter = 1; counter < args.length; counter++)
 			{
 				fileArray[counter-1] = new File(args[counter]);
+				fileNames[counter-1] = args[counter];
 				requestedMapperThreads++;
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
@@ -45,7 +47,7 @@ public class Index
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
-			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum);
+			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum , fileNames[threadNum] );
 			mapperThreadHolder[threadNum].start();
 		}
 	}
