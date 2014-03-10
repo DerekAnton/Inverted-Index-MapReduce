@@ -11,14 +11,16 @@ public class Index
 	
 	public static void main(String[] args)
 	{
-		int requestedThreads = 0;
+		int requestedReducerThreads = 0;
+		int requestedMapperThreads = 0;
 
 		try
 		{
-			requestedThreads = Integer.parseInt(args[0]);
+			requestedReducerThreads = Integer.parseInt(args[0]);
 			for(int counter = 1; counter < args.length; counter++)
 			{
 				fileArray[counter-1] = new File(args[counter]);
+				requestedMapperThreads++;
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)
