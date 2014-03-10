@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Index 
 {
 	public static mapperThread[] mapperThreadHolder; //will house the mapper threads//
-
+	public static reducerThread[] reducerThreadHolder;
 	private static String[] fileNames;
 	public static File[] fileArray = new File[20]; //The loaded files from disk //
 	public static BoundedBuffer[] bbuffers;
@@ -31,6 +31,12 @@ public class Index
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];
+			reducerThreadHolder = new reducerThread[requestedReducerThreads];
+			
+			
+			createMapThreads(requestedMapperThreads);
+			createReducerThreads(requestedReducerThreads);
+
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -41,9 +47,8 @@ public class Index
 	}	
 	
 	
-	public void createMapThreads(int numThreads)
+	public static void createMapThreads(int numThreads)
 	{
-
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
@@ -51,6 +56,17 @@ public class Index
 			mapperThreadHolder[threadNum].start();
 		}
 	}
+	
+	public static void createReducerThreads(int numThreads)
+	{
+		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
+		{
+			//Create New Thread
+			reducerThreadHolder[threadNum] = new reducerThread(threadNum);
+			reducerThreadHolder[threadNum].start();
+		}		
+	}
+	
 }
 
 /* INPUT
