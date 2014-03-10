@@ -39,6 +39,7 @@ public class Index
 			createMapThreads(requestedMapperThreads);
 			createReducerThreads(requestedReducerThreads);
 			isDone(requestedMapperThreads, requestedReducerThreads);
+			printMap();
 		
 		}
 		catch(ArrayIndexOutOfBoundsException e)
