@@ -34,7 +34,7 @@ public class mapperThread extends Thread
 				for(String word: nextLine)
 				{
 					hashValue = word.hashCode() % Index.requestedMapperThreads;
-					word = word + ":" + lineNumber + ":" + fileName;
+					word = word + " " + lineNumber + " " + fileName;
 					Index.bbuffers[hashValue].Producer(word);
 				}
 	    	}
