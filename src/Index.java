@@ -15,7 +15,7 @@ public class Index
 	public static int requestedMapperThreads;
 	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		int requestedReducerThreads = 0;
 		requestedMapperThreads = 0;
@@ -36,7 +36,8 @@ public class Index
 			
 			createMapThreads(requestedMapperThreads);
 			createReducerThreads(requestedReducerThreads);
-
+			isDone(requestedMapperThreads, requestedReducerThreads);
+		
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -47,24 +48,39 @@ public class Index
 	}	
 	
 	
-	public static void createMapThreads(int numThreads)
+	public static void createMapThreads(int numThreads) throws InterruptedException
 	{
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
 			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum , fileNames[threadNum] );
 			mapperThreadHolder[threadNum].start();
+			mapperThreadHolder[threadNum].join();
 		}
 	}
 	
-	public static void createReducerThreads(int numThreads)
+	public static void createReducerThreads(int numThreads) throws InterruptedException
 	{
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
 			reducerThreadHolder[threadNum] = new reducerThread(threadNum);
 			reducerThreadHolder[threadNum].start();
+			reducerThreadHolder[threadNum].join();
 		}		
+	}
+
+	public static void isDone(int mapNum , int reduceNum) throws InterruptedException{
+		
+		for(int threadNum = 0 ; threadNum < mapNum ; threadNum++ )
+		{
+			mapperThreadHolder[threadNum].join();
+		}
+		for(int threadNum = 0 ; threadNum < reduceNum ; threadNum++ )
+		{
+			reducerThreadHolder[threadNum].join();
+		}
+		
 	}
 	
 }
