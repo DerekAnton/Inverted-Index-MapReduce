@@ -1,4 +1,5 @@
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ public class Index
 	public static File[] fileArray; //The loaded files from disk //
 	public static BoundedBuffer[] bbuffers;
 	public static int requestedMapperThreads;
+	public static ConcurrentHashMap invertedIndex;
 	
 	public static void main(String[] args)
 	{

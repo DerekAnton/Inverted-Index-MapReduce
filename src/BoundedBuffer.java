@@ -11,7 +11,7 @@ public class BoundedBuffer {
 	private int count = 0;
 
 	public BoundedBuffer(int size) {
-		this.size = size;
+		this.size = 10;
 		buffer = new String[size];
 		mutex = new Semaphore(1);
 		empty = new Semaphore(size);
