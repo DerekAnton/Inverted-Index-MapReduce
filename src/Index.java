@@ -13,7 +13,7 @@ public class Index
 	public static reducerThread[] reducerThreadHolder;
 	private static String[] fileNames;
 	public static File[] fileArray = new File[20]; //The loaded files from disk //
-	public static BoundedBuffer[] bbuffers;
+	public static BoundedBuffer[] bbuffers = new BoundedBuffer[20];
 	public static int requestedMapperThreads;
 	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
 	
