@@ -24,13 +24,17 @@ public class reducerThread extends Thread {
 		String fileName;
 		String oldHashValue;
 		String newHashValue;
+		boolean allDone = false;
+
 		
-		while(true)
+		while(!allDone)
 		{
 			currentStringData = buff.remove().split(" ");
 			currentWord = currentStringData[0];
 			lineNumber = currentStringData[1];
 			fileName = currentStringData[2];
+			allDone = true;
+			
 			
 			if(Index.invertedIndex.contains(currentWord)){
 				oldHashValue = (String) Index.invertedIndex.get(currentWord);
@@ -42,6 +46,13 @@ public class reducerThread extends Thread {
 				newHashValue = currentWord + " " + lineNumber + "@" + fileName;
 				Index.invertedIndex.put(currentWord, newHashValue);				
 			}
+			
+			for(BoundedBuffer b : Index.bbuffers){
+				if(!b.isEmpty()){
+					allDone = false;
+				}
+			}
+			
 			
 		}
 		//Index.invertedIndex.put(key, value);

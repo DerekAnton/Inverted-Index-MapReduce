@@ -2,7 +2,7 @@ import java.util.concurrent.Semaphore;
 
 public class BoundedBuffer {
 
-	private String[] buffer;
+	private static String[] buffer;
 	private final int size;
 	Semaphore mutex;
 	Semaphore empty;
@@ -40,6 +40,7 @@ public class BoundedBuffer {
 			full.acquire();
 			mutex.acquire();
 			returnString = buffer[(last - count) % size];
+			buffer[(last - count) % size] = "";
 			count--;
 			mutex.release();
 			empty.release();
@@ -50,5 +51,14 @@ public class BoundedBuffer {
 
 		return returnString;
 	}
-
+	public boolean isEmpty(){
+		boolean empty = true;
+		for(String s : buffer){
+			if(s != ""){
+				empty = false;
+			}
+		}
+		return empty;
+	}
+	
 }
