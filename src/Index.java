@@ -1,18 +1,18 @@
 
 import java.util.concurrent.Semaphore;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Index 
 {
-	private static File[] fileArray;
+	private static mapperThread[] threadHolder = new mapperThread[20]; // the current mapper threads //
+	private static File[] fileArray= new File[20];
+	
 	public static void main(String[] args)
 	{
 		int requestedThreads = 0;
-		fileArray = new File[20];
-		
+
 		try
 		{
 			requestedThreads = Integer.parseInt(args[0]);
@@ -32,8 +32,7 @@ public class Index
 	
 	public void createMapThreads(int numThreads)
 	{
-		mapperThread[] threadHolder = new mapperThread[20];
-		
+
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
