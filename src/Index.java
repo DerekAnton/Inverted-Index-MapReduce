@@ -11,7 +11,7 @@ public class Index
 {
 	public static mapperThread[] mapperThreadHolder; //will house the mapper threads//
 	public static reducerThread[] reducerThreadHolder;
-	private static String[] fileNames;
+	private static String[] fileNames = new String[50];
 	public static File[] fileArray = new File[20]; //The loaded files from disk //
 	public static BoundedBuffer[] bbuffers;
 	public static int requestedMapperThreads;
