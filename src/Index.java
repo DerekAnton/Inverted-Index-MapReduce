@@ -8,8 +8,11 @@ import java.util.Scanner;
 public class Index 
 {
 	public static mapperThread[] mapperThreadHolder; //will house the mapper threads//
-	public static File[] fileArray; //The loaded files from disk //
+
 	private static String[] fileNames;
+	public static File[] fileArray = new File[20]; //The loaded files from disk //
+
+	
 	public static BoundedBuffer[] bbuffers;
 	public static int requestedMapperThreads;
 	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
@@ -29,7 +32,6 @@ public class Index
 				requestedMapperThreads++;
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
-			fileArray = new File[requestedMapperThreads];
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];
 		}
 		catch(ArrayIndexOutOfBoundsException e)
