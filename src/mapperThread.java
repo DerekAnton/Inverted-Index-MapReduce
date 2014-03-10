@@ -20,14 +20,22 @@ public class mapperThread extends Thread
 	}
 	public void mapRead(int fileNumber)
 	{
-		String nextLine;
+		String nextLine[];
 		int hashValue;
+		int lineNumber = 1;
 	    try 
 	    {
 			Scanner scan = new Scanner(fileArray[fileNumber]);
-			nextLine = scan.next();
-			hashValue = nextLine.hashCode() % Index.requestedMapperThreads;
-			Index.bbuffers[hashValue].Producer(nextLine);
+	    	while(scan.hasNext())
+	    	{
+			nextLine = scan.nextLine().split(" ");
+				for(String word: nextLine)
+				{
+					hashValue = word.hashCode() % Index.requestedMapperThreads;
+					Index.bbuffers[hashValue].Producer(word);
+				}
+	    	}
+	    	lineNumber++;
 			
 		} 
 	    catch (FileNotFoundException e) 
