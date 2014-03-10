@@ -3,6 +3,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Index 
@@ -79,6 +81,15 @@ public class Index
 		for(int threadNum = 0 ; threadNum < reduceNum ; threadNum++ )
 		{
 			reducerThreadHolder[threadNum].join();
+		}
+		
+	}
+	
+	
+	public static void printMap(){
+		Iterator it = invertedIndex.keySet().iterator();
+		while(it.hasNext()){
+			System.out.println(invertedIndex.get(it.next()));
 		}
 		
 	}
