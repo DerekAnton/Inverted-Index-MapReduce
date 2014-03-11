@@ -29,7 +29,7 @@ public class reducerThread extends Thread {
 		
 		while(!allDone)
 		{
-			currentStringData = buff.remove().split(" ");
+			currentStringData = Index.bbuffers[BufferNumber].remove().split(" ");
 			currentWord = currentStringData[0];
 			lineNumber = currentStringData[1];
 			fileName = currentStringData[2];

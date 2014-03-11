@@ -32,6 +32,12 @@ public class Index
 				requestedMapperThreads++;
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
+			
+			//Initiate Buffers
+			for(int i = 0 ; i < bbuffers.length; i++){
+				bbuffers[i] = new BoundedBuffer();
+			}
+			
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];
 			reducerThreadHolder = new reducerThread[requestedReducerThreads];
 			

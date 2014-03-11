@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import java.util.Scanner;
 import java.io.File;
@@ -18,24 +21,30 @@ public class mapperThread extends Thread
 	}
 	public void run() 
 	{
-		mapRead(fileNumber);
+		try {
+			mapRead(fileNumber);
+		} catch (IOException e) {
+			System.out.println("Mapper Thread Failed to Run");
+		}
 	}
-	public void mapRead(int fileNumber)
+	public void mapRead(int fileNumber) throws IOException
 	{
-		String nextLine[];
+		String nextLineData[];
+		String data;
 		int hashValue;
 		int lineNumber = 1;
 	    try 
 	    {
-			Scanner scan = new Scanner(fileArray[fileNumber]);
-	    	while(scan.hasNext())
+			Scanner scan = new Scanner(Index.fileArray[fileNumber]);
+
+			while(scan.hasNext())
 	    	{
-			nextLine = scan.nextLine().split(" ");
-				for(String word: nextLine)
+				nextLineData = scan.nextLine().split(" ");
+				for(String word: nextLineData)
 				{
 					hashValue = word.hashCode() % Index.requestedMapperThreads;
-					word = word + " " + lineNumber + " " + fileName;
-					Index.bbuffers[hashValue].Producer(word);
+					data = word + " " + lineNumber + " " + fileName;
+					Index.bbuffers[hashValue].Producer(data);
 				}
 	    	}
 	    	lineNumber++;
