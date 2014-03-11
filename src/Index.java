@@ -64,7 +64,6 @@ public class Index
 			//Create New Thread
 			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum , fileNames[threadNum] );
 			mapperThreadHolder[threadNum].start();
-			mapperThreadHolder[threadNum].join();
 		}
 	}
 	
@@ -75,7 +74,6 @@ public class Index
 			//Create New Thread
 			reducerThreadHolder[threadNum] = new reducerThread(threadNum);
 			reducerThreadHolder[threadNum].start();
-			reducerThreadHolder[threadNum].join();
 		}		
 	}
 

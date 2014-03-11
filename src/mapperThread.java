@@ -42,6 +42,7 @@ public class mapperThread extends Thread
 				nextLineData = scan.nextLine().split(" ");
 				for(String word: nextLineData)
 				{
+					word.replaceAll("[^A-Za-z0-9 ]", "" ).toLowerCase();	
 					hashValue = word.hashCode() % Index.requestedMapperThreads;
 					data = word + " " + lineNumber + " " + fileName;
 					Index.bbuffers[hashValue].Producer(data);
