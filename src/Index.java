@@ -13,13 +13,14 @@ public class Index
 	public static reducerThread[] reducerThreadHolder;
 	private static String[] fileNames = new String[50];
 	public static File[] fileArray = new File[20]; //The loaded files from disk //
-	public static BoundedBuffer[] bbuffers = new BoundedBuffer[20];
+	public static BoundedBuffer[] bbuffers;
 	public static int requestedMapperThreads;
+	public static int requestedReducerThreads;
 	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
 	
 	public static void main(String[] args) throws InterruptedException
 	{
-		int requestedReducerThreads = 0;
+		requestedReducerThreads = 0;
 		requestedMapperThreads = 0;
 
 		try
@@ -32,9 +33,9 @@ public class Index
 				requestedMapperThreads++;
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
-			
+
 			//Initiate Buffers
-			for(int i = 0 ; i < bbuffers.length; i++){
+			for(int i = 0 ; i < requestedReducerThreads; i++){
 				bbuffers[i] = new BoundedBuffer();
 			}
 			
@@ -64,6 +65,7 @@ public class Index
 			//Create New Thread
 			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum , fileNames[threadNum] );
 			mapperThreadHolder[threadNum].start();
+
 		}
 	}
 	
@@ -95,8 +97,6 @@ public class Index
 	
 	
 	public static void printMap(){
-		
-
 		Iterator it = invertedIndex.keySet().iterator();
 		while(it.hasNext()){
 			System.out.println(invertedIndex.get(it.next()));

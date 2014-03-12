@@ -43,13 +43,13 @@ public class mapperThread extends Thread
 				for(String word: nextLineData)
 				{
 					word.replaceAll("[^A-Za-z0-9 ]", "" ).toLowerCase();	
-					hashValue = word.hashCode() % Index.requestedMapperThreads;
+					hashValue = word.hashCode() % Index.requestedReducerThreads;
 					data = word + " " + lineNumber + " " + fileName;
 					Index.bbuffers[hashValue].Producer(data);
 				}
+		    	lineNumber++;
+
 	    	}
-	    	lineNumber++;
-			
 		} 
 	    catch (FileNotFoundException e) 
 		{
