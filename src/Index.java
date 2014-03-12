@@ -74,6 +74,7 @@ public class Index
 			//Create New Thread
 			reducerThreadHolder[threadNum] = new reducerThread(threadNum);
 			reducerThreadHolder[threadNum].start();
+
 		}		
 	}
 
@@ -82,16 +83,20 @@ public class Index
 		for(int threadNum = 0 ; threadNum < mapNum ; threadNum++ )
 		{
 			mapperThreadHolder[threadNum].join();
+
 		}
 		for(int threadNum = 0 ; threadNum < reduceNum ; threadNum++ )
 		{
 			reducerThreadHolder[threadNum].join();
+
 		}
 		
 	}
 	
 	
 	public static void printMap(){
+		
+
 		Iterator it = invertedIndex.keySet().iterator();
 		while(it.hasNext()){
 			System.out.println(invertedIndex.get(it.next()));

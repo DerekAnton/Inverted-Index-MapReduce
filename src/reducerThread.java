@@ -29,32 +29,43 @@ public class reducerThread extends Thread {
 		
 		while(!allDone)
 		{
-			currentStringData = Index.bbuffers[BufferNumber].remove().split(" ");
-			currentWord = currentStringData[0];
-			lineNumber = currentStringData[1];
-			fileName = currentStringData[2];
+			
+			if (!Index.bbuffers[BufferNumber].isEmpty()) {
+				//System.out.println(Index.bbuffers[BufferNumber].isEmpty());
+				// System.out.println(Index.bbuffers.length + "  " +
+				// BufferNumber);
+				currentStringData = Index.bbuffers[BufferNumber].remove()
+						.split(" ");
+				for (String s : currentStringData) {
+					// System.out.println(s);
+				}
+				// System.out.println(currentStringData[0] );
+				currentWord = currentStringData[0];
+				lineNumber = currentStringData[1];
+				fileName = currentStringData[2];
+
+				if (Index.invertedIndex.containsKey(currentWord)) {
+					oldHashValue = (String) Index.invertedIndex.get(currentWord);
+					//System.out.println(oldHashValue);
+					newHashValue = oldHashValue + " , " + lineNumber + "@" + fileName;
+					//System.out.println(newHashValue);
+
+					Index.invertedIndex.put(currentWord, newHashValue);
+				} else {
+					newHashValue = currentWord + " " + lineNumber + "@"
+							+ fileName;
+					Index.invertedIndex.put(currentWord, newHashValue);
+				}
+			}
 			allDone = true;
-			
-			
-			if(Index.invertedIndex.contains(currentWord)){
-				oldHashValue = (String) Index.invertedIndex.get(currentWord);
-				newHashValue = oldHashValue + " , " + lineNumber +  "@"  + fileName;
-				Index.invertedIndex.put(currentWord, newHashValue);
-			}
-			else
-			{
-				newHashValue = currentWord + " " + lineNumber + "@" + fileName;
-				Index.invertedIndex.put(currentWord, newHashValue);				
-			}
-			
 			for(BoundedBuffer b : Index.bbuffers){
 				if(!b.isEmpty()){
 					allDone = false;
 				}
 			}
-			
-			
-		}
+		
+	}
+
 		//Index.invertedIndex.put(key, value);
 	}
 	
