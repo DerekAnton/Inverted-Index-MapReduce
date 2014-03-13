@@ -37,8 +37,11 @@ public class reducerThread extends Thread {
 				currentStringData = Index.bbuffers[BufferNumber].remove()
 						.split(" ");
 				for (String s : currentStringData) {
-					// System.out.println(s);
+					 //System.out.println(s);
 				}
+				 System.out.println(currentStringData[0]);
+
+				 
 				// System.out.println(currentStringData[0] );
 				currentWord = currentStringData[0];
 				lineNumber = currentStringData[1];

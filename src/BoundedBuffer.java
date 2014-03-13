@@ -4,7 +4,7 @@ import java.util.concurrent.Semaphore;
 public class BoundedBuffer {
 
 	private static String[] buffer;
-	private static LinkedList<String> buff = new LinkedList<String>();
+	private static LinkedList<WordData> buff = new LinkedList<WordData>();
 	private final int size;
 	Semaphore mutex;
 	Semaphore empty;

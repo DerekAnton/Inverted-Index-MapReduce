@@ -48,8 +48,9 @@ public class mapperThread extends Thread
 					Index.bbuffers[hashValue].Producer(data);
 				}
 		    	lineNumber++;
-
+		    	
 	    	}
+			System.out.println("MAP DIE");
 		} 
 	    catch (FileNotFoundException e) 
 		{
