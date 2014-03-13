@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.Scanner;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.io.File;
 
 
@@ -12,6 +14,8 @@ public class mapperThread extends Thread
 	private File[] fileArray;
 	private int fileNumber = 0;
 	private String fileName;
+	public static Lock lock = new ReentrantLock();
+
 	
 	public mapperThread(File[] fileArray, int fileNumber , String fileName)
 	{
@@ -47,6 +51,9 @@ public class mapperThread extends Thread
 					hashValue = word.hashCode() % Index.requestedReducerThreads;
 					data = word + " " + lineNumber + " " + fileName;
 					
+					if(hashValue < 0){
+						hashValue += Index.requestedReducerThreads;
+					}
 					//From old BoundedBuffer
 					//Index.bbuffers[hashValue].Producer(data);
 					
@@ -58,7 +65,7 @@ public class mapperThread extends Thread
 		    	lineNumber++;
 		    	
 	    	}
-			System.out.println("MAP DIE");
+			done();
 		} 
 	    catch (FileNotFoundException e) 
 		{
@@ -66,5 +73,12 @@ public class mapperThread extends Thread
 			//e.printStackTrace();
 		}  
 		//Method for reading text and adding to bounded buffer
+	}
+	
+	public static synchronized void done(){
+		lock.lock();
+		System.out.println("MAP DIE");
+		Index.mappersActive--;
+		lock.unlock();
 	}
 }

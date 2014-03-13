@@ -19,7 +19,7 @@ public class BBMonitor {
 		last = 0;
 		count = 0;
 		for(int i = 0 ; i < buffer.length; i++){
-			buffer[i] = new WordData("" , 0 , "" , false);
+			buffer[i] = null;
 		}
 		
 	}
@@ -32,7 +32,7 @@ public class BBMonitor {
 				empty.await();
 			}
 			buffer[appendPointer] = new WordData(word.getWord(), word.getLineNumber() , word.getFileName() , true);
-			appendPointer = (appendPointer + 1);
+			appendPointer++;
 			if(appendPointer == buffer.length){
 				appendPointer = 0;
 			}
@@ -56,10 +56,12 @@ public class BBMonitor {
 			returnWord = buffer[removePointer];
 			buffer[removePointer] = null;
 			removePointer++;
+
 			if(removePointer == buffer.length){
 				//System.out.println("REMOVE TOO BIG");
 				removePointer = 0;
 			}
+
 			count = count - 1;
 			empty.signal();
 			

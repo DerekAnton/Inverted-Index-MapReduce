@@ -13,6 +13,7 @@ public class BoundedBuffer {
 	private int last = 0;
 	private int count = 0;
 	private int modValue;
+	
 
 	public BoundedBuffer() {
 		this.size = 10;

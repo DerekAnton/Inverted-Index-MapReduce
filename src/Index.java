@@ -3,6 +3,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,6 +20,8 @@ public class Index
 	public static int requestedMapperThreads;
 	public static int requestedReducerThreads;
 	public static ConcurrentHashMap<String, String> invertedIndex = new ConcurrentHashMap<String, String>();
+	public static int mappersActive;
+	
 	
 	public static void main(String[] args) throws InterruptedException
 	{
@@ -45,6 +49,7 @@ public class Index
 			}
 			
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];
+			mappersActive = requestedMapperThreads;
 			reducerThreadHolder = new reducerThread[requestedReducerThreads];
 			
 			
@@ -90,11 +95,13 @@ public class Index
 		for(int threadNum = 0 ; threadNum < mapNum ; threadNum++ )
 		{
 			mapperThreadHolder[threadNum].join();
+			//System.out.println("loop1");
 
 		}
 		for(int threadNum = 0 ; threadNum < reduceNum ; threadNum++ )
 		{
 			reducerThreadHolder[threadNum].join();
+			//System.out.println("loop2");
 
 		}
 		
@@ -102,11 +109,23 @@ public class Index
 	
 	
 	public static void printMap(){
+		//System.out.println("print");
+		try {
+			PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+	
+
 		Iterator it = invertedIndex.keySet().iterator();
 		while(it.hasNext()){
 			System.out.println(invertedIndex.get(it.next()));
 		}
-		
+		writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

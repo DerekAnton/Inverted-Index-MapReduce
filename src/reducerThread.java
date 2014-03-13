@@ -51,7 +51,7 @@ public class reducerThread extends Thread {
 				//currentWord = currentStringData[0];
 				//lineNumber = currentStringData[1];
 				//fileName = currentStringData[2];
-
+			if(!Index.buffers[BufferNumber].isEmpty()){
 			data = Index.buffers[BufferNumber].remove();
 			if (data != null) {
 				currentWord = data.getWord();
@@ -72,23 +72,37 @@ public class reducerThread extends Thread {
 					Index.invertedIndex.put(currentWord, newHashValue);
 				}
 			}
+			
+			}
 			allDone = true;
+			
+			mapperThread.lock.lock();
+			//System.out.println(Index.mappersActive);
+			if(Index.mappersActive == 0){
+				allDone = true;
+				
+			}
+			mapperThread.lock.unlock();
+
 			//Check if all the buffers are empty
 			for(BBMonitor b : Index.buffers){
 				if(!b.isEmpty()){
 					//System.out.println("test1");
 
 					allDone = false;
+					
 				}
 			}
 			//Check if all the Mapper threads are done adding words
+			
 			for(mapperThread m : Index.mapperThreadHolder){
 				if(m.isAlive()){
 					//System.out.println("test2");
 
 					allDone = false;
 				}
-			System.out.println(allDone);
+				
+			//System.out.println(allDone);
 			}
 		
 	}
