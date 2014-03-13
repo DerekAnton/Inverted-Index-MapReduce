@@ -14,9 +14,10 @@ public class Index
 	private static String[] fileNames = new String[50];
 	public static File[] fileArray = new File[20]; //The loaded files from disk //
 	public static BoundedBuffer[] bbuffers;
+	public static BBMonitor[] buffers;
 	public static int requestedMapperThreads;
 	public static int requestedReducerThreads;
-	public static ConcurrentHashMap invertedIndex = new ConcurrentHashMap();
+	public static ConcurrentHashMap<String, String> invertedIndex = new ConcurrentHashMap<String, String>();
 	
 	public static void main(String[] args) throws InterruptedException
 	{
@@ -33,10 +34,14 @@ public class Index
 				requestedMapperThreads++;
 			}
 			bbuffers = new BoundedBuffer[requestedReducerThreads];
-
+			buffers = new BBMonitor[requestedReducerThreads];
+			
 			//Initiate Buffers
 			for(int i = 0 ; i < requestedReducerThreads; i++){
 				bbuffers[i] = new BoundedBuffer();
+			}
+			for(int i = 0 ; i < requestedReducerThreads; i++){
+				buffers[i] = new BBMonitor();
 			}
 			
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];

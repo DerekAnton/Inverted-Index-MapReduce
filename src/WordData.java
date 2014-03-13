@@ -1,33 +1,33 @@
 
 public class WordData {
 
-	public static String word;
-	public static int lineNumber;
-	public static String fileName;
-	public static boolean initialized = false;
+	private String word;
+	private int lineNumber;
+	private String fileName;
+	private boolean initialized = false;
 	
-	public static String getWord() {
+	public String getWord() {
 		return word;
 	}
 
-	public static void setWord(String word) {
-		WordData.word = word;
+	public void setWord(String word) {
+		this.word = word;
 	}
 
-	public static int getLineNumber() {
+	public int getLineNumber() {
 		return lineNumber;
 	}
 
-	public static void setLineNumber(int lineNumber) {
-		WordData.lineNumber = lineNumber;
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 
-	public static String getFileName() {
+	public  String getFileName() {
 		return fileName;
 	}
 
-	public static void setFileName(String fileName) {
-		WordData.fileName = fileName;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public WordData(String word, int lineNumber, String fileName , boolean initialized){
@@ -37,7 +37,7 @@ public class WordData {
 		this.initialized = initialized;
 	}
 
-	public static boolean isInitialized() {
+	public boolean isInitialized() {
 		return initialized;
 	}
 	

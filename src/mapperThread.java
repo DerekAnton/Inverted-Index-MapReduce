@@ -33,6 +33,7 @@ public class mapperThread extends Thread
 		String data;
 		int hashValue;
 		int lineNumber = 1;
+		WordData next;
 	    try 
 	    {
 			Scanner scan = new Scanner(Index.fileArray[fileNumber]);
@@ -45,7 +46,14 @@ public class mapperThread extends Thread
 					word.replaceAll("[^A-Za-z0-9 ]", "" ).toLowerCase();	
 					hashValue = word.hashCode() % Index.requestedReducerThreads;
 					data = word + " " + lineNumber + " " + fileName;
-					Index.bbuffers[hashValue].Producer(data);
+					
+					//From old BoundedBuffer
+					//Index.bbuffers[hashValue].Producer(data);
+					
+					
+					next = new WordData(word, lineNumber, fileName, true);
+					Index.buffers[hashValue].append(next);
+					//System.out.println(next.getWord());
 				}
 		    	lineNumber++;
 		    	
