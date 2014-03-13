@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Index 
 {
@@ -110,13 +111,17 @@ public class Index
 	
 	public static void printMap(){
 		//System.out.println("print");
+		TreeMap<String, String> printMap= new TreeMap();
+		printMap.putAll(invertedIndex);
 		try {
 			PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
 	
 
-		Iterator it = invertedIndex.keySet().iterator();
+		Iterator it = printMap.keySet().iterator();
+		Object printS;
 		while(it.hasNext()){
-			System.out.println(invertedIndex.get(it.next()));
+			printS = it.next();
+			System.out.println(printS + " "  + printMap.get(printS));
 		}
 		writer.close();
 		} catch (FileNotFoundException e) {

@@ -62,13 +62,13 @@ public class reducerThread extends Thread {
 				if (Index.invertedIndex.containsKey(currentWord)) {
 					oldHashValue = (String) Index.invertedIndex
 							.get(currentWord);
-					newHashValue = oldHashValue + " , " + lineNumber + "@"
-							+ fileName;
+					newHashValue = oldHashValue + "," + fileName + "@"
+							+ lineNumber;
 
 					Index.invertedIndex.put(currentWord, newHashValue);
 				} else {
-					newHashValue = currentWord + " " + lineNumber + "@"
-							+ fileName;
+					newHashValue = fileName + "@"
+							+ lineNumber;
 					Index.invertedIndex.put(currentWord, newHashValue);
 				}
 			}
