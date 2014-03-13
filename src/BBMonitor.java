@@ -6,7 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BBMonitor {
 	
 	private WordData[] buffer = new WordData[10];
-	private int last;
 	private int count;
 	private Lock lock = new ReentrantLock();
 	private Condition full = lock.newCondition();
@@ -16,8 +15,8 @@ public class BBMonitor {
 	
 	
 	public BBMonitor(){
-		last = 0;
 		count = 0;
+		//INstantiate the buffer
 		for(int i = 0 ; i < buffer.length; i++){
 			buffer[i] = null;
 		}
@@ -27,19 +26,26 @@ public class BBMonitor {
 	public void append(WordData word) {
 		lock.lock();
 		try {
+			//Buffer Full Wait for slot to open
 			while (count == buffer.length) {
-				//System.out.println("I am full");
 				empty.await();
 			}
+			
+			//Put WordData in buffer
 			buffer[appendPointer] = new WordData(word.getWord(), word.getLineNumber() , word.getFileName() , true);
 			appendPointer++;
+			
+			//Again Mod function can return negative numbers so I did my own
 			if(appendPointer == buffer.length){
 				appendPointer = 0;
 			}
+			//Increment the number of items in buffer
 			count++;
+			
+			//Signal their is a new item to be removed
 			full.signal();
 		} catch (Exception e) {
-
+			System.out.println("APPEND ERROR");
 		}
 		lock.unlock();
 
@@ -48,26 +54,28 @@ public class BBMonitor {
 		WordData returnWord  = new WordData("" , 0 , "" , false);
 		lock.lock();
 		try{
+			//Buffer is empty, wait for item to remove
 			while(count == 0){
-				//System.out.println("I am empty");
 				full.await();
 			}
-			
+			//Remove WordData
 			returnWord = buffer[removePointer];
 			buffer[removePointer] = null;
 			removePointer++;
-
+			
+			//Custom Mod function
 			if(removePointer == buffer.length){
-				//System.out.println("REMOVE TOO BIG");
 				removePointer = 0;
 			}
-
+			//Decrement number of items in buffer
 			count = count - 1;
+			
+			//Signal that an item has been removed
 			empty.signal();
 			
 			
 		}catch(Exception e){
-			System.out.println(e);
+			System.out.println("REMOVE FAIL");
 		}
 		lock.unlock();
 

@@ -13,15 +13,14 @@ import java.util.TreeMap;
 public class Index 
 {
 	public static mapperThread[] mapperThreadHolder; //will house the mapper threads//
-	public static reducerThread[] reducerThreadHolder;
-	private static String[] fileNames = new String[50];
-	public static File[] fileArray = new File[20]; //The loaded files from disk //
-	public static BoundedBuffer[] bbuffers;
-	public static BBMonitor[] buffers;
+	public static reducerThread[] reducerThreadHolder; //will house the reducer threads
+	private static String[] fileNames; //holds files names
+	public static File[] fileArray; //The loaded files from disk //
+	public static BBMonitor[] buffers; //Bounded Buffers
 	public static int requestedMapperThreads;
 	public static int requestedReducerThreads;
-	public static ConcurrentHashMap<String, String> invertedIndex = new ConcurrentHashMap<String, String>();
-	public static int mappersActive;
+	public static ConcurrentHashMap<String, String> invertedIndex = new ConcurrentHashMap<String, String>(); //InvertedIndex
+	public static int mappersActive; //Active mappper threads = n
 	
 	
 	public static void main(String[] args) throws InterruptedException
@@ -32,23 +31,28 @@ public class Index
 		try
 		{
 			requestedReducerThreads = Integer.parseInt(args[0]);
+			
+			//Instantiate Arrays
+			buffers = new BBMonitor[requestedReducerThreads];
+			fileNames = new String[args.length-1];
+			fileArray = new File[args.length-1];
+			
+			//Load Files into file array
 			for(int counter = 1; counter < args.length; counter++)
 			{
 				fileArray[counter-1] = new File(args[counter]);
 				fileNames[counter-1] = args[counter];
 				requestedMapperThreads++;
 			}
-			bbuffers = new BoundedBuffer[requestedReducerThreads];
-			buffers = new BBMonitor[requestedReducerThreads];
+			
+		
 			
 			//Initiate Buffers
-			for(int i = 0 ; i < requestedReducerThreads; i++){
-				bbuffers[i] = new BoundedBuffer();
-			}
 			for(int i = 0 ; i < requestedReducerThreads; i++){
 				buffers[i] = new BBMonitor();
 			}
 			
+			//Instantiate thread holders
 			mapperThreadHolder = new mapperThread[requestedMapperThreads];
 			mappersActive = requestedMapperThreads;
 			reducerThreadHolder = new reducerThread[requestedReducerThreads];
@@ -74,7 +78,7 @@ public class Index
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
 		{
 			//Create New Thread
-			mapperThreadHolder[threadNum] = new mapperThread(fileArray, threadNum , fileNames[threadNum] );
+			mapperThreadHolder[threadNum] = new mapperThread( threadNum , fileNames[threadNum] );
 			mapperThreadHolder[threadNum].start();
 
 		}

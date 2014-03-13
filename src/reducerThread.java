@@ -17,7 +17,6 @@ public class reducerThread extends Thread {
 	}
 	
 	public void reduce(){
-		buff = Index.bbuffers[BufferNumber];
 		String currentStringData[];
 		String currentWord;
 		String lineNumber;
