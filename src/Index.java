@@ -1,3 +1,15 @@
+/*
+	 * Mitchell Hebert
+	 * Derek Anton
+	 * 
+	 * OS Spring 2014
+	 * Professor Sean Barker
+	 * 
+	 * Index is main class. It holds all 
+	 * the code for starting program, importing 
+	 * data, and starting all the threads
+	 * 
+	 */
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;

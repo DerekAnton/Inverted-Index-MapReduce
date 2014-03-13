@@ -131,7 +131,7 @@ public class BoundedBuffer {
 	}
 
 	public synchronized WordData wRemove() {
-		WordData returnWord = new WordData("" , 0 , "" , false);
+		WordData returnWord = new WordData("" , 0 , "" );
 		try {
 			full.acquire();
 			mutex.acquire();
@@ -144,7 +144,7 @@ public class BoundedBuffer {
 			modValue =((last-count)%size);
 
 			returnWord = wBuffer[modValue];
-			wBuffer[modValue] =  new WordData("" , 0 , "" , false);
+			//wBuffer[modValue] =  new WordData("" , 0 , "" , false);
 			count--;
 			mutex.release();
 			empty.release();
@@ -167,9 +167,9 @@ public class BoundedBuffer {
 		}
 		empty = true;
 		for(WordData data : wBuffer){
-			if(data.isInitialized()){
+			//if(data.isInitialized()){
 				empty = false;
-			}
+		//	}
 		}
 		
 		

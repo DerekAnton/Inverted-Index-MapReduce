@@ -1,3 +1,15 @@
+/*
+	 * Mitchell Hebert
+	 * Derek Anton
+	 * 
+	 * OS Spring 2014
+	 * Professor Sean Barker
+	 * 
+	 * Class for Bounded Buffer 
+	 * using monitors. 
+	 * 
+	 */
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -32,7 +44,7 @@ public class BBMonitor {
 			}
 			
 			//Put WordData in buffer
-			buffer[appendPointer] = new WordData(word.getWord(), word.getLineNumber() , word.getFileName() , true);
+			buffer[appendPointer] = new WordData(word.getWord(), word.getLineNumber() , word.getFileName() );
 			appendPointer++;
 			
 			//Again Mod function can return negative numbers so I did my own
@@ -51,7 +63,7 @@ public class BBMonitor {
 
 	}
 	public WordData remove(){
-		WordData returnWord  = new WordData("" , 0 , "" , false);
+		WordData returnWord  = new WordData("" , 0 , "" );
 		lock.lock();
 		try{
 			//Buffer is empty, wait for item to remove

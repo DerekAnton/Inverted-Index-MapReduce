@@ -1,23 +1,28 @@
-
+/*
+ * Mitchell Hebert
+ * Derek Anton
+ * 
+ * OS Spring 2014
+ * Professor Sean Barker
+ * 
+ * Thread code for removing items from
+ * buffer and computing inverted index
+ * 
+ */
 
 public class reducerThread extends Thread {
 
-	
-	private BoundedBuffer buff;
 	private int BufferNumber;
-	
-	public reducerThread(int BufferNumber)
-	{
+
+	public reducerThread(int BufferNumber) {
 		this.BufferNumber = BufferNumber;
 	}
-	
-	public void run() 
-	{
+
+	public void run() {
 		reduce();
 	}
-	
-	public void reduce(){
-		String currentStringData[];
+
+	public void reduce() {
 		String currentWord;
 		String lineNumber;
 		String fileName;
@@ -25,89 +30,62 @@ public class reducerThread extends Thread {
 		String newHashValue;
 		boolean allDone = false;
 		WordData data;
-		
-		while(!allDone)
-		{
-			
-			//DEREK!!!!!
-			/*
-			 * This Block of code below commented out is from old BoundedBuffer
-			 * Class.
-			 * Keeping it just incase.
-			 */
-				//System.out.println(Index.bbuffers[BufferNumber].isEmpty());
-				// System.out.println(Index.bbuffers.length + "  " +
-				// BufferNumber);
-				//currentStringData = Index.bbuffers[BufferNumber].remove()
-						//.split(" ");
-				//for (String s : currentStringData) {
-					 //System.out.println(s);
-				//}
-				 //System.out.println(currentStringData[0]);
 
-				 
-				// System.out.println(currentStringData[0] );
-				//currentWord = currentStringData[0];
-				//lineNumber = currentStringData[1];
-				//fileName = currentStringData[2];
-			if(!Index.buffers[BufferNumber].isEmpty()){
-			data = Index.buffers[BufferNumber].remove();
-			if (data != null) {
-				currentWord = data.getWord();
-				lineNumber = Integer.toString(data.getLineNumber());
-				fileName = data.getFileName();
-				//System.out.println(currentWord);
+		// While there is data left to reduce
+		while (!allDone) {
+			//If there is nothing to grab, don't try
+			if (!Index.buffers[BufferNumber].isEmpty()) {
+				//Remove item from bounded buffer
+				data = Index.buffers[BufferNumber].remove();
+				//Make sure you didn't remove null data
+				if (data != null) {
+					
+					//Get information from word object
+					currentWord = data.getWord();
+					lineNumber = Integer.toString(data.getLineNumber());
+					fileName = data.getFileName();
 
-				if (Index.invertedIndex.containsKey(currentWord)) {
-					oldHashValue = (String) Index.invertedIndex
-							.get(currentWord);
-					newHashValue = oldHashValue + "," + fileName + "@"
-							+ lineNumber;
+					//If word already exists in inverted index
+					if (Index.invertedIndex.containsKey(currentWord)) {
+						oldHashValue = (String) Index.invertedIndex
+								.get(currentWord);
+						newHashValue = oldHashValue + "," + fileName + "@"
+								+ lineNumber;
 
-					Index.invertedIndex.put(currentWord, newHashValue);
-				} else {
-					newHashValue = fileName + "@"
-							+ lineNumber;
-					Index.invertedIndex.put(currentWord, newHashValue);
+						Index.invertedIndex.put(currentWord, newHashValue);
+					
+					//If it is a new word
+					} else {
+						newHashValue = fileName + "@" + lineNumber;
+						Index.invertedIndex.put(currentWord, newHashValue);
+					}
 				}
+
 			}
 			
-			}
+			//Check to see if all the threads are done
 			allDone = true;
-			
 			mapperThread.lock.lock();
-			//System.out.println(Index.mappersActive);
-			if(Index.mappersActive == 0){
+			if (Index.mappersActive == 0) {
 				allDone = true;
-				
+
 			}
 			mapperThread.lock.unlock();
 
-			//Check if all the buffers are empty
-			for(BBMonitor b : Index.buffers){
-				if(!b.isEmpty()){
-					//System.out.println("test1");
-
-					allDone = false;
-					
-				}
-			}
-			//Check if all the Mapper threads are done adding words
-			
-			for(mapperThread m : Index.mapperThreadHolder){
-				if(m.isAlive()){
-					//System.out.println("test2");
-
+			// Check if all the buffers are empty
+			for (BBMonitor b : Index.buffers) {
+				if (!b.isEmpty()) {
 					allDone = false;
 				}
-				
-			//System.out.println(allDone);
 			}
-		
-	}
-		System.out.println("DEAD REDUCE");
+			// Check if all the Mapper threads are done adding words
+			for (mapperThread m : Index.mapperThreadHolder) {
+				if (m.isAlive()) {
+					allDone = false;
+				}
+			}
 
+		}
 	}
-	
-	
+
 }

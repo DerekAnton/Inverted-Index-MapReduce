@@ -1,3 +1,15 @@
+/*
+	 * Mitchell Hebert
+	 * Derek Anton
+	 * 
+	 * OS Spring 2014
+	 * Professor Sean Barker
+	 * 
+	 * Thread class for mapping text files into
+	 * bounded buffers.
+	 * 
+	 */
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -68,7 +80,7 @@ public class mapperThread extends Thread
 					}
 		
 					//Add it to correct BBMonitor
-					next = new WordData(word, lineNumber, fileName, true);
+					next = new WordData(word, lineNumber, fileName);
 					Index.buffers[hashValue].append(next);
 				}
 				//Whole Line Read
