@@ -57,7 +57,7 @@ public class reducerThread extends Thread {
 				currentWord = data.getWord();
 				lineNumber = Integer.toString(data.getLineNumber());
 				fileName = data.getFileName();
-				System.out.println(currentWord);
+				//System.out.println(currentWord);
 
 				if (Index.invertedIndex.containsKey(currentWord)) {
 					oldHashValue = (String) Index.invertedIndex
@@ -76,14 +76,19 @@ public class reducerThread extends Thread {
 			//Check if all the buffers are empty
 			for(BBMonitor b : Index.buffers){
 				if(!b.isEmpty()){
+					//System.out.println("test1");
+
 					allDone = false;
 				}
 			}
 			//Check if all the Mapper threads are done adding words
 			for(mapperThread m : Index.mapperThreadHolder){
 				if(m.isAlive()){
+					//System.out.println("test2");
+
 					allDone = false;
 				}
+			System.out.println(allDone);
 			}
 		
 	}

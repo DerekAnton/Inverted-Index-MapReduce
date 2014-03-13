@@ -1,0 +1,13 @@
+OK so status:
+
+It works for 2 files and one reduce thread. If there are more than one reduce threads it hangs and I think it is dead locked.
+That seems to be the last issue. I havent tested it on the txt files from moodle either.
+
+I am no longer using BoundedBuffer.java. It has been replaced by BBMonitor.java. It is cleaner and 
+it uses new tech I wasn't aware of before. 
+
+Data is also passed using WordData.java which makes things cleaner. 
+
+its really late so I dont know what elese to put. 
+
+if you have any questions let me know
