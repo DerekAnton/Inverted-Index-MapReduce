@@ -68,7 +68,7 @@ public class Index
 		}
 	}	
 	
-	
+	//Create mapper threads
 	public static void createMapThreads(int numThreads) throws InterruptedException
 	{
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
@@ -80,6 +80,7 @@ public class Index
 		}
 	}
 	
+	//Create all the reducer threads
 	public static void createReducerThreads(int numThreads) throws InterruptedException
 	{
 		for(int threadNum = 0 ; threadNum < numThreads ; threadNum++ )
@@ -91,18 +92,17 @@ public class Index
 		}		
 	}
 
+	//Check to see if all threads are dead before printing
 	public static void isDone(int mapNum , int reduceNum) throws InterruptedException{
 		
 		for(int threadNum = 0 ; threadNum < mapNum ; threadNum++ )
 		{
 			mapperThreadHolder[threadNum].join();
-			//System.out.println("loop1");
 
 		}
 		for(int threadNum = 0 ; threadNum < reduceNum ; threadNum++ )
 		{
 			reducerThreadHolder[threadNum].join();
-			//System.out.println("loop2");
 
 		}
 		
@@ -110,20 +110,27 @@ public class Index
 	
 	
 	public static void printMap(){
-		//System.out.println("print");
+
+		//Makes HashMap Alphabetical
 		TreeMap<String, String> printMap= new TreeMap();
 		printMap.putAll(invertedIndex);
+		
 		try {
-			PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-	
 
-		Iterator it = printMap.keySet().iterator();
-		Object printS;
-		while(it.hasNext()){
-			printS = it.next();
-			System.out.println(printS + " "  + printMap.get(printS));
-		}
-		writer.close();
+			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+
+			// Used To Print Out map
+			Iterator it = printMap.keySet().iterator();
+			Object printS;
+			while (it.hasNext()) {
+				printS = it.next();
+				// Print To Console
+				System.out.println(printS + " " + printMap.get(printS));
+
+				// Print To File
+				// writer.println(printS + " " + printMap.get(printS));
+			}
+			writer.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
