@@ -1,4 +1,4 @@
-/*
+	/*
 	 * Mitchell Hebert
 	 * Derek Anton
 	 * 
@@ -100,7 +100,7 @@ public class mapperThread extends Thread
 	//Decrements amount of remaining map values
 	public static synchronized void done(){
 		lock.lock();
-		//System.out.println("MAP Dead");
+		System.out.println("MAP Dead");
 		Index.mappersActive--;
 		lock.unlock();
 	}

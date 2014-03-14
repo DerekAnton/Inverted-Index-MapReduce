@@ -61,6 +61,13 @@ public class reducerThread extends Thread {
 					}
 				}
 
+			}else{
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			//Check to see if all the threads are done
@@ -71,7 +78,7 @@ public class reducerThread extends Thread {
 
 			}
 			mapperThread.lock.unlock();
-
+			//System.out.println("test");
 			// Check if all the buffers are empty
 			for (BBMonitor b : Index.buffers) {
 				if (!b.isEmpty()) {
@@ -81,11 +88,13 @@ public class reducerThread extends Thread {
 			// Check if all the Mapper threads are done adding words
 			for (mapperThread m : Index.mapperThreadHolder) {
 				if (m.isAlive()) {
+					//System.out.println("Alive");
 					allDone = false;
 				}
 			}
-
+			//System.out.println(allDone);
 		}
+	//System.out.println("Dead");
 	}
 
 }

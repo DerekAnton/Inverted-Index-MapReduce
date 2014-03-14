@@ -1,4 +1,4 @@
-/*
+	/*
 	 * Mitchell Hebert
 	 * Derek Anton
 	 * 
@@ -134,7 +134,6 @@ public class Index
 		try {
 
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
-
 			// Used To Print Out map
 			Iterator it = printMap.keySet().iterator();
 			Object printS;
@@ -142,7 +141,6 @@ public class Index
 				printS = it.next();
 				// Print To Console
 				System.out.println(printS + " " + printMap.get(printS));
-
 				// Print To File
 				// writer.println(printS + " " + printMap.get(printS));
 			}
