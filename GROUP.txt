@@ -1,0 +1,33 @@
+GROUP MEMBERS: Mitchell Hebert and Derek Anton
+
+WORK DIVISION: A lot of work was done in pair programming so dividing work on paper
+is a little difficult. Work was split evenly.
+
+Mitchell:
+BBMointor class and Logic
+mapperThread Class and Logic
+reducerThread Class and Logic
+
+
+Debugging and Testing
+Comments
+Design Doc
+
+
+Derek:
+Project Setup (Github repo, skeleton code for reading files)
+Thread Creation
+Custom Thread class idea
+Index class and Logic
+WordData Class and Logic
+Alphabetical Printing
+
+Debugging and Testing
+Comments
+Design Doc
+
+
+NOTE: Since there was a natural dividing line between logic for adding and removing 
+items to buffer and the setup and creation of threads, most of the work was divided 
+along that line. However, we did all work when together so we were able to talk through
+all logic together. 
