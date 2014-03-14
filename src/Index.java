@@ -140,9 +140,9 @@ public class Index
 			while (it.hasNext()) {
 				printS = it.next();
 				// Print To Console
-				System.out.println(printS + " " + printMap.get(printS));
+				//System.out.println(printS + " " + printMap.get(printS));
 				// Print To File
-				// writer.println(printS + " " + printMap.get(printS));
+				 writer.println(printS + " " + printMap.get(printS));
 			}
 			writer.close();
 		} catch (FileNotFoundException e) {

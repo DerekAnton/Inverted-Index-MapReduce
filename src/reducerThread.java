@@ -62,12 +62,7 @@ public class reducerThread extends Thread {
 				}
 
 			}else{
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			
 			}
 			
 			//Check to see if all the threads are done
